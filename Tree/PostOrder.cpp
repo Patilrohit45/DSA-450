@@ -17,34 +17,39 @@ struct Node
 };
 
 //MARK:- ITERATIVE WAY
-void preOrderIterative(Node* root){
-    if(root == nullptr){
-        return; 
+void postOrderIterative(Node* root){
+  if(root==nullptr){
+    return;
+  }
+  stack<Node*>st1,st2;
+  st1.push(root);
+  while(!st1.empty()){
+    root = st1.top();
+    st1.pop();
+    st2.push(root);
+    if(root->left!=nullptr){
+        st1.push(root->left);
     }
-    stack<Node*>st;
-    st.push(root);
-    while(!st.empty()){
-        root = st.top();
-        st.pop();
-        cout<<root->data<<" ";
-        if(root->right!=nullptr){
-            st.push(root->right);
-        }
-        if(root->left!=nullptr){
-            st.push(root->left);
-        }
+    if(root->right!=nullptr){
+        st1.push(root->right);
     }
+  }
+  while(!st2.empty()){
+    cout<<st2.top()->data<<" ";
+    st2.pop();
+  }
 }
+
 //MARK:- RECURSIVE WAY
-void preOrderRecursive(Node* root){
+void postOrderRecursive(Node* root){
     if(root == nullptr){
         return;
     }
-    cout<<root->data<<" ";
-    preOrderRecursive(root->left);
-    preOrderRecursive(root->right);
+    postOrderRecursive(root->left);
+
+    postOrderRecursive(root->right);
+        cout<<root->data<<" ";
 }
-//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 
 int main()
 {
     /* Construct the following tree
@@ -69,8 +74,8 @@ int main()
     root->right->left->left = new Node(7);
     root->right->left->right = new Node(8);
  
-    preOrderIterative(root);
+    postOrderIterative(root);
     cout<<endl;
-    preOrderRecursive(root);
+    postOrderRecursive(root);
     return 0;
 }

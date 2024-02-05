@@ -17,34 +17,32 @@ struct Node
 };
 
 //MARK:- ITERATIVE WAY
-void preOrderIterative(Node* root){
-    if(root == nullptr){
-        return; 
-    }
-    stack<Node*>st;
-    st.push(root);
-    while(!st.empty()){
-        root = st.top();
+void inOrderIterative(Node* root){
+  stack<Node*>st;
+    Node* node = root; 
+  while(true){
+    if(node != nullptr){
+        st.push(node);
+        node = node->left ;
+    }else{
+        if(st.empty()==true) break;
+        node = st.top();
         st.pop();
-        cout<<root->data<<" ";
-        if(root->right!=nullptr){
-            st.push(root->right);
-        }
-        if(root->left!=nullptr){
-            st.push(root->left);
-        }
+        cout<<node->data<<" ";
+        node = node->right;
     }
+  }
 }
+
 //MARK:- RECURSIVE WAY
-void preOrderRecursive(Node* root){
+void inOrderRecursive(Node* root){
     if(root == nullptr){
         return;
     }
+    inOrderRecursive(root->left);
     cout<<root->data<<" ";
-    preOrderRecursive(root->left);
-    preOrderRecursive(root->right);
+    inOrderRecursive(root->right);
 }
-//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 
 int main()
 {
     /* Construct the following tree
@@ -69,8 +67,8 @@ int main()
     root->right->left->left = new Node(7);
     root->right->left->right = new Node(8);
  
-    preOrderIterative(root);
+    inOrderIterative(root);
     cout<<endl;
-    preOrderRecursive(root);
+    inOrderRecursive(root);
     return 0;
 }
